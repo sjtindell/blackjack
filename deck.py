@@ -13,3 +13,4 @@ class Deck(object):
 
   def deal(self, n):
     return [self.deck.pop() for _ in range(n)]
+

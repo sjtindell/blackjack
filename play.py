@@ -14,4 +14,14 @@ while True:
   print
   dc_value = dealer.play(dcards, d)
   print
+  if pc_value > 0 and dc_value > 0:
+    if pc_value < dc_value:
+      print("dealer wins")
+    else:
+      print("player wins")
+  elif pc_value == -1 and dc_value > 0:
+    print("dealer wins")
+  elif dc_value == -1 and pc_value > 0:
+    print("player wins")
+
   #print(d.deck)

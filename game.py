@@ -21,14 +21,21 @@ class Base(object):
     print(card_string)
 
   def check_value(self, cards):
-    h, s = self.total_value(cards) 
+    # -1 if bust, # if not, 1 if blackjack
+    h, s = self.total_value(cards)
     if h > 21 and s > 21:
       print("bust!")
+      return -1
     elif h == 21 or s == 21:
       print("blackjack!")
-    else:
-      pass
-
+      return 1
+    elif h > 21 and s < 21:
+      print("stood on", s)
+      return s
+    elif h < 21:
+      print("stood on", h)
+      return h
+    
 
 class Player(Base):
   
@@ -44,7 +51,6 @@ class Player(Base):
     self.bankroll += amount
    
   def play(self, cards, dcard, deck):
-
     while self.total_value(cards)[1] < 21:
       print(dcard)
       self.show_cards(cards)
@@ -53,24 +59,23 @@ class Player(Base):
         cards.extend(deck.deal(1))
       elif play == "s":
         break 
-      self.show_cards(cards)
-      self.check_value(self.total_value(cards))
-      return self.total_value(cards)
+    value = self.check_value(cards)
+    return value
       
 
 class Dealer(Base):
   
   def play(self, cards, deck):
+    self.show_cards(cards)
     while self.total_value(cards)[1] <= 21:
-      self.show_cards(cards)
       h, s = self.total_value(cards)
       if s >= 17:
-        break
+       break 
       else:
         cards.extend(deck.deal(1))
-    self.show_cards(cards)
-    self.check_value(self.total_value(cards))
-    return self.total_value(cards)
+        self.show_cards(cards)
+    value = self.check_value(cards)
+    return value
 
 
 
