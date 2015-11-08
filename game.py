@@ -46,7 +46,7 @@ def player_round():
     card_string = " ".join(str(card) for card in player_cards)
     print(dealer_cards[1])
     print(card_string)
-    play = raw_input("> ")
+    play = input("> ")
     if play == "h":
       player_cards.extend(d.deal(1))
     elif play =="s":
@@ -63,7 +63,7 @@ def dealer_round():
     card_string = " ".join(str(card) for card in dealer_cards)
     print(card_string)
     s, h = total_value(dealer_cards)
-    if s >= 17 or h >= 17:
+    if s >= 17:
       break
     else:
       dealer_cards.extend(d.deal(1))
@@ -74,16 +74,42 @@ def dealer_round():
   return total_value(dealer_cards)
 
 
+def get_winner(player, dealer):
+  print(player, dealer)
+  if 21 in dealer and 21 in player:
+    print("push!")
+  elif 21 in dealer:
+    print("dealer blackjack!")
+  elif 21 in player:
+    print("player blackjack!")
+  elif player[0] > dealer[0] and player[0] > dealer[1] and player[0] < 22:
+    print("player wins")
+  elif player[1] > player[0] and player[1] > dealer[1] and player[0] < 22:
+    print("player wins")
+  elif dealer[0] > player[0] and dealer[0] > player[1] and dealer[0] < 22:
+    print("dealer wins")
+  elif dealer[1] > player[0] and dealer[1] > player[1] and dealer[1] < 22:
+    print("dealer wins")
+  elif player == dealer:
+    print("push!") 
+
+# I could also mark the playrs during their round. Rather than returning both totals,
+# just check both totals and if the player busts a hard total but not their soft one,
+# just return that one. They will always use the higher one anyway.
+
+
 d = Deck()
 
 while True:
   bankroll = 100
+  bet = 5
   d.shuffle()
   dealer_cards = d.deal(2)
   player_cards = d.deal(2)
   pc_value = player_round()
   print
   dc_value = dealer_round()
-  print(pc_value, dc_value)
+  get_winner(pc_value, dc_value)
+
   print
   #print(d.deck)
