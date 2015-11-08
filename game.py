@@ -43,7 +43,7 @@ class Player(Base):
     self.bankroll = bankroll
 
   def bet(self):
-    bet = input("bet: $")
+    bet = int(input("bet: "))
     self.bankroll -= bet
     return bet
 
