@@ -60,6 +60,7 @@ class Player(Base):
       elif play == "s":
         break 
     value = self.check_value(cards)
+    self.show_cards(cards)
     return value
       
 
